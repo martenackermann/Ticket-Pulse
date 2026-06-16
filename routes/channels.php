@@ -10,7 +10,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('board.{id}', function ($user, $id) {
     $board = Board::find($id);
 
-    if (! $board || (int) $user->id !== (int) $board->workspace->owner_id) {
+    if (! $board) {
         return false;
     }
 

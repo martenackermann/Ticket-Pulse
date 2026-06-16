@@ -20,7 +20,7 @@ class BoardPolicy
      */
     public function view(User $user, Board $board): bool
     {
-        return $user->id === $board->workspace->owner_id;
+        return true;
     }
 
     /**
@@ -36,7 +36,7 @@ class BoardPolicy
      */
     public function update(User $user, Board $board): bool
     {
-        return $user->id === $board->workspace->owner_id;
+        return true;
     }
 
     /**
@@ -44,7 +44,7 @@ class BoardPolicy
      */
     public function delete(User $user, Board $board): bool
     {
-        return $user->id === $board->workspace->owner_id;
+        return true;
     }
 
     /**

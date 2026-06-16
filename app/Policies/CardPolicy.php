@@ -20,7 +20,7 @@ class CardPolicy
      */
     public function view(User $user, Card $card): bool
     {
-        return $user->id === $card->board->workspace->owner_id;
+        return true;
     }
 
     /**
@@ -36,7 +36,7 @@ class CardPolicy
      */
     public function update(User $user, Card $card): bool
     {
-        return $user->id === $card->board->workspace->owner_id;
+        return true;
     }
 
     /**
@@ -44,7 +44,7 @@ class CardPolicy
      */
     public function delete(User $user, Card $card): bool
     {
-        return $user->id === $card->board->workspace->owner_id;
+        return true;
     }
 
     /**

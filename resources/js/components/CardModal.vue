@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { Card, Comment } from '@/types';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/Components/ui/dialog';
-import { Button } from '@/Components/ui/button';
-import { Textarea } from '@/Components/ui/textarea';
-import { Input } from '@/Components/ui/input';
-import { ScrollArea } from '@/Components/ui/scroll-area';
-import { Separator } from '@/Components/ui/separator';
-import { useBoardStore } from '@/Stores/board';
+import { useForm } from '@inertiajs/vue3';
+import { Card } from '@/types';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import axios from 'axios';
+import { update as updateCard } from '@/routes/cards';
+import { store as storeCardComment } from '@/routes/cards/comments';
+import { generateDescription, generateBreakdown, summarizeComments } from '@/routes/ai';
 
 const props = defineProps<{
     card: Card | null;
@@ -17,7 +21,6 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:open']);
 
-const boardStore = useBoardStore();
 const newComment = ref('');
 const isGeneratingDescription = ref(false);
 const isGeneratingBreakdown = ref(false);
@@ -25,13 +28,32 @@ const isSummarizing = ref(false);
 const aiSummary = ref('');
 const aiTasks = ref<string[]>([]);
 
+const cardForm = useForm({
+    title: '',
+    description: '',
+});
+
+const persistCard = (): void => {
+    if (!props.card) {
+        return;
+    }
+
+    cardForm.title = props.card.title;
+    cardForm.description = props.card.description ?? '';
+
+    cardForm.put(updateCard(props.card.id), {
+        preserveScroll: true,
+        preserveState: true,
+    });
+};
+
 const generateDescription = async () => {
     if (!props.card) return;
     isGeneratingDescription.value = true;
     try {
-        const response = await axios.post(route('ai.generate-description'), { title: props.card.title });
+        const response = await axios.post(generateDescription().url, { title: props.card.title });
         props.card.description = response.data.description;
-        // In a real app, we'd save this to the server too
+        persistCard();
     } finally {
         isGeneratingDescription.value = false;
     }
@@ -41,7 +63,7 @@ const generateBreakdown = async () => {
     if (!props.card) return;
     isGeneratingBreakdown.value = true;
     try {
-        const response = await axios.post(route('ai.generate-breakdown'), { title: props.card.title });
+        const response = await axios.post(generateBreakdown().url, { title: props.card.title });
         aiTasks.value = response.data.tasks;
     } finally {
         isGeneratingBreakdown.value = false;
@@ -52,7 +74,7 @@ const summarizeComments = async () => {
     if (!props.card) return;
     isSummarizing.value = true;
     try {
-        const response = await axios.post(route('ai.summarize-comments', props.card.id));
+        const response = await axios.post(summarizeComments(props.card.id).url);
         aiSummary.value = response.data.summary;
     } finally {
         isSummarizing.value = false;
@@ -61,13 +83,22 @@ const summarizeComments = async () => {
 
 const addComment = async () => {
     if (!props.card || !newComment.value) return;
-    await axios.post(route('cards.comments.store', props.card.id), { body: newComment.value });
+    const response = await axios.post(storeCardComment(props.card.id).url, { body: newComment.value });
+
+    if (response.data?.comment) {
+        props.card.comments = props.card.comments ?? [];
+
+        if (!props.card.comments.find((comment) => comment.id === response.data.comment.id)) {
+            props.card.comments.unshift(response.data.comment);
+        }
+    }
+
     newComment.value = '';
-    // Comment will be added via Echo listener or Inertia reload
 };
 
 watch(() => props.open, (isOpen) => {
     if (!isOpen) {
+        persistCard();
         aiSummary.value = '';
         aiTasks.value = [];
     }
@@ -112,7 +143,7 @@ watch(() => props.open, (isOpen) => {
                             {{ isSummarizing ? 'Summarizing...' : '📝 Summarize Discussion' }}
                         </Button>
                     </div>
-                    
+
                     <div v-if="aiSummary" class="bg-green-50 p-3 rounded-lg text-sm text-green-800 border border-green-200">
                         <strong>AI Summary:</strong> {{ aiSummary }}
                     </div>
@@ -126,11 +157,11 @@ watch(() => props.open, (isOpen) => {
                         <div v-for="comment in card.comments" :key="comment.id" class="mb-4">
                             <div class="flex gap-2">
                                 <Avatar class="w-6 h-6">
-                                    <AvatarFallback>{{ comment.user?.name.charAt(0) }}</AvatarFallback>
+                                    <AvatarFallback>{{ comment.user?.name?.charAt(0) ?? 'U' }}</AvatarFallback>
                                 </Avatar>
                                 <div class="flex-1">
                                     <div class="flex items-center gap-2">
-                                        <span class="text-sm font-bold">{{ comment.user?.name }}</span>
+                                        <span class="text-sm font-bold">{{ comment.user?.name ?? 'Unknown user' }}</span>
                                         <span class="text-xs text-gray-400">{{ new Date(comment.created_at).toLocaleString() }}</span>
                                     </div>
                                     <p class="text-sm text-gray-700">{{ comment.body }}</p>

@@ -1,3 +1,6 @@
+import {Component} from "vue";
+import {RouteDefinition} from "@/wayfinder";
+
 export enum CardStatus {
     Todo = 'todo',
     InProgress = 'in_progress',
@@ -52,4 +55,10 @@ export interface Workspace {
     name: string;
     owner_id: number;
     boards?: Board[];
+}
+
+export interface NavItem {
+    title: string;
+    href: RouteDefinition<any>;
+    icon: Component;
 }

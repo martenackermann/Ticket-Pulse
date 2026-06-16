@@ -21,4 +21,30 @@ class CommentCreated implements ShouldBroadcast
             new PresenceChannel('board.'.$this->comment->card->board_id),
         ];
     }
+
+    public function broadcastAs(): string
+    {
+        return 'comment.created';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return [
+            'comment' => [
+                'id' => $this->comment->id,
+                'card_id' => $this->comment->card_id,
+                'user_id' => $this->comment->user_id,
+                'body' => $this->comment->body,
+                'created_at' => $this->comment->created_at?->toIso8601String(),
+                'user' => [
+                    'id' => $this->comment->user?->id,
+                    'name' => $this->comment->user?->name,
+                    'email' => $this->comment->user?->email,
+                ],
+            ],
+        ];
+    }
 }

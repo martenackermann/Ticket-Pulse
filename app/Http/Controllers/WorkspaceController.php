@@ -11,7 +11,7 @@ class WorkspaceController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Workspaces/Index', [
-            'workspaces' => $request->user()->workspaces()->latest()->get(),
+            'workspaces' => Workspace::query()->with('boards')->latest()->get(),
         ]);
     }
 

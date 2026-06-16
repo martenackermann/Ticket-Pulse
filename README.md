@@ -56,8 +56,7 @@ php artisan test
 
 ## Screenshots
 
-- **Board View**: [Placeholder]
-- **Card Modal**: [Placeholder]
-- **Activity Feed**: [Placeholder]
-- **Presence Indicators**: [Placeholder]
-- **AI Description Generator**: [Placeholder]
+- **Board View**: ![Board View](/resources/assets/Board.png)
+- **Card Modal**: ![Card Modal](/resources/assets/Card.png)
+- **Activity Feed**: ![Activity Feed](/resources/assets/Activity.png)
+- **Presence Indicators**: ![Presence Indicators](/resources/assets/Indicators.png)

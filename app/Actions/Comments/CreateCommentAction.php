@@ -16,6 +16,8 @@ class CreateCommentAction
             'body' => $data['body'],
         ]);
 
+        $comment->load('user');
+
         $card->board->activities()->create([
             'user_id' => $user->id,
             'event_type' => 'comment_created',

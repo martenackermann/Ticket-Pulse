@@ -4,6 +4,7 @@ use App\Enums\CardStatus;
 use App\Models\Board;
 use App\Models\Card;
 use App\Models\User;
+use App\Models\Workspace;
 
 test('user can create a card', function () {
     $user = User::factory()->create();
@@ -43,4 +44,22 @@ test('user can move a card', function () {
         'status' => 'in_progress',
         'position' => 0,
     ]);
+});
+
+test('user receives created comment payload as json when posting from modal', function () {
+    $user = User::factory()->create();
+    $workspace = Workspace::factory()->create();
+    $board = Board::factory()->create(['workspace_id' => $workspace->id]);
+    $card = Card::factory()->create(['board_id' => $board->id]);
+
+    $response = $this->actingAs($user)
+        ->postJson(route('cards.comments.store', $card->id), [
+            'body' => 'Looks good to me',
+        ]);
+
+    $response
+        ->assertOk()
+        ->assertJsonPath('comment.card_id', $card->id)
+        ->assertJsonPath('comment.body', 'Looks good to me')
+        ->assertJsonPath('comment.user.id', $user->id);
 });

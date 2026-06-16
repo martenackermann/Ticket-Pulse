@@ -16,7 +16,13 @@ class CommentController extends Controller
             'body' => 'required|string',
         ]);
 
-        $action->execute($card, $request->user(), $validated);
+        $comment = $action->execute($card, $request->user(), $validated);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'comment' => $comment,
+            ]);
+        }
 
         return back();
     }

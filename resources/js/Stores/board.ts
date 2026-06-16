@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { Card, Board, CardStatus } from '@/types';
 import { router } from '@inertiajs/vue3';
+import { move as moveCardRoute } from '@/routes/cards';
 
 export const useBoardStore = defineStore('board', () => {
     const board = ref<Board | null>(null);
@@ -18,17 +19,19 @@ export const useBoardStore = defineStore('board', () => {
 
     function moveCard(cardId: number, newStatus: CardStatus, newPosition: number) {
         const card = cards.value.find(c => c.id === cardId);
-        if (!card) return;
+        if (!card) {
+            return;
+        }
 
-        // Optimistic update could go here, but for MVP we'll rely on events/reload
-        router.post(route('cards.move', cardId), {
+        card.status = newStatus;
+        card.position = newPosition;
+
+        router.post(moveCardRoute(cardId), {
             status: newStatus,
             position: newPosition
         }, {
             preserveScroll: true,
-            onSuccess: () => {
-                // Board will be reloaded by Inertia
-            }
+            preserveState: true,
         });
     }
 
