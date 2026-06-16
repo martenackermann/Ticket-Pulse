@@ -9,6 +9,7 @@ class RenameBoardAction
     public function execute(Board $board, string $name): Board
     {
         $board->update(['name' => $name]);
+
         return $board;
     }
 }

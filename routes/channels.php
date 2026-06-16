@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Board;
 use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
@@ -7,9 +8,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('board.{id}', function ($user, $id) {
-    $board = \App\Models\Board::find($id);
-    
-    if (!$board || (int) $user->id !== (int) $board->workspace->owner_id) {
+    $board = Board::find($id);
+
+    if (! $board || (int) $user->id !== (int) $board->workspace->owner_id) {
         return false;
     }
 

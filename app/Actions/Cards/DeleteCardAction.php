@@ -2,9 +2,9 @@
 
 namespace App\Actions\Cards;
 
+use App\Events\CardDeleted;
 use App\Models\Card;
 use App\Models\User;
-use App\Events\CardDeleted;
 use Illuminate\Support\Facades\DB;
 
 class DeleteCardAction

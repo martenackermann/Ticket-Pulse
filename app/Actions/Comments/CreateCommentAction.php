@@ -2,10 +2,10 @@
 
 namespace App\Actions\Comments;
 
+use App\Events\CommentCreated;
 use App\Models\Card;
 use App\Models\Comment;
 use App\Models\User;
-use App\Events\CommentCreated;
 
 class CreateCommentAction
 {

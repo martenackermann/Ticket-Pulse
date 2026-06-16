@@ -2,18 +2,18 @@
 
 namespace App\Actions\Cards;
 
+use App\Enums\CardStatus;
+use App\Events\CardCreated;
 use App\Models\Board;
 use App\Models\Card;
 use App\Models\User;
-use App\Enums\CardStatus;
-use App\Events\CardCreated;
 
 class CreateCardAction
 {
     public function execute(Board $board, User $user, array $data): Card
     {
         $status = $data['status'] ?? CardStatus::Todo;
-        
+
         $position = $board->cards()
             ->where('status', $status)
             ->max('position') + 1;

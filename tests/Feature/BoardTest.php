@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use App\Models\Workspace;
-use App\Models\Board;
 
 test('user can create a board in their workspace', function () {
     $this->withoutExceptionHandling();

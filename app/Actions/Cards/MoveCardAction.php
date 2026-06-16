@@ -2,10 +2,10 @@
 
 namespace App\Actions\Cards;
 
-use App\Models\Card;
-use App\Models\User;
 use App\Enums\CardStatus;
 use App\Events\CardMoved;
+use App\Models\Card;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class MoveCardAction

@@ -13,9 +13,9 @@ class AIController extends Controller
     public function generateDescription(Request $request, GenerateCardDescriptionAction $action)
     {
         $request->validate(['title' => 'required|string']);
-        
+
         return response()->json([
-            'description' => $action->execute($request->title)
+            'description' => $action->execute($request->title),
         ]);
     }
 
@@ -24,7 +24,7 @@ class AIController extends Controller
         $request->validate(['title' => 'required|string']);
 
         return response()->json([
-            'tasks' => $action->execute($request->title)
+            'tasks' => $action->execute($request->title),
         ]);
     }
 
@@ -33,7 +33,7 @@ class AIController extends Controller
         $this->authorize('view', $card->board);
 
         return response()->json([
-            'summary' => $action->execute($card)
+            'summary' => $action->execute($card),
         ]);
     }
 }

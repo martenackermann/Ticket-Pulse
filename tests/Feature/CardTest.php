@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\User;
+use App\Enums\CardStatus;
 use App\Models\Board;
 use App\Models\Card;
-use App\Enums\CardStatus;
+use App\Models\User;
 
 test('user can create a card', function () {
     $user = User::factory()->create();

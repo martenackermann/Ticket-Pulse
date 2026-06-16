@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\CardStatus;
+use App\Models\Board;
 use App\Models\Card;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,10 +20,10 @@ class CardFactory extends Factory
     public function definition(): array
     {
         return [
-            'board_id' => \App\Models\Board::factory(),
+            'board_id' => Board::factory(),
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
-            'status' => \App\Enums\CardStatus::Todo,
+            'status' => CardStatus::Todo,
             'position' => 0,
         ];
     }
