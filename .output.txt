@@ -1,0 +1,131 @@
+Command finished with exit code 2.
+Command output:
+
+  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\BoardTest[39m
+  [31;1m⨯[39;22m[90m [39m[90muser can create a board in their workspace[39m[90m                          [39m [90m0.17s[39m
+  [31;1m⨯[39;22m[90m [39m[90muser cannot create a board in someone else's workspace[39m[90m              [39m [90m0.16s[39m
+  [31m────────────────────────────────────────────────────────────────────────────[39m
+  [41;1m FAILED [49;22m [1mTests\Feature\BoardTest[22m [90m>[39m user can create a board in their… [41;1m Error [49;22m
+[39;1m  Call to undefined method App\Http\Controllers\BoardController::authorize()[39;22m
+
+  at [32mapp/Http/Controllers/BoardController.php[39m:[32m27[39m
+     23▕     }
+     24▕
+     25▕     public function store(Request $request, Workspace $workspace, CreateBoardAction $action)
+     26▕     {
+  ➜  27▕         $this->authorize('update', $workspace);
+     28▕
+     29▕         $validated = $request->validate([
+     30▕             'name' => 'required|string|max:255',
+     31▕         ]);
+
+  [33m1   [39m[39;1mapp/Http/Controllers/BoardController.php[39;22m:[39;1m27[39;22m
+      [2m+11 vendor frames [22m
+  [33m13  [39m[39;1mapp/Http/Middleware/HandleAppearance.php[39;22m:[39;1m21[39;22m
+
+  [31m────────────────────────────────────────────────────────────────────────────[39m
+  [41;1m FAILED [49;22m [1mTests\Feature\BoardTest[22m [90m>[39m user cannot create a board in someone e…
+[39;1m  Expected response status code [403] but received 500.
+Failed asserting that 500 is identical to 403.
+
+The following exception occurred during the last request:
+
+Error: Call to undefined method App\Http\Controllers\BoardController::authorize() in /Users/martenackermann/PhpstormProjects/TicketPulse/app/Http/Controllers/BoardController.php:27
+Stack trace:
+#0 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(46): App\Http\Controllers\BoardController->store(Object(Illuminate\Http\Request), Object(App\Models\Workspace), Object(App\Actions\Boards\CreateBoardAction))
+#1 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Route.php(275): Illuminate\Routing\ControllerDispatcher->dispatch(Object(Illuminate\Routing\Route), Object(App\Http\Controllers\BoardController), 'store')
+#2 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Route.php(215): Illuminate\Routing\Route->runController()
+#3 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Router.php(822): Illuminate\Routing\Route->run()
+#4 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Router->{closure:Illuminate\Routing\Router::runRouteWithinStack():821}(Object(Illuminate\Http\Request))
+#5 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Auth/Middleware/EnsureEmailIsVerified.php(41): Illuminate\Pipeline\Pipeline->{closure:Illuminate\Pipeline\Pipeline::prepareDestination():178}(Object(Illuminate\Http\Request))
+#6 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Auth\Middleware\EnsureEmailIsVerified->handle(Object(Illuminate\Http\Request), Object(Closure))
+#7 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Http/Middleware/AddLinkHeadersForPreloadedAssets.php(32): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#8 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets->handle(Object(Illuminate\Http\Request), Object(Closure))
+#9 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/inertiajs/inertia-laravel/src/Middleware.php(138): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#10 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Inertia\Middleware->handle(Object(Illuminate\Http\Request), Object(Closure))
+#11 /Users/martenackermann/PhpstormProjects/TicketPulse/app/Http/Middleware/HandleAppearance.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#12 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App\Http\Middleware\HandleAppearance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#13 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(52): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#14 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Routing\Middleware\SubstituteBindings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#15 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(63): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#16 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Auth\Middleware\Authenticate->handle(Object(Illuminate\Http\Request), Object(Closure))
+#17 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestForgery.php(104): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#18 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestForgery->handle(Object(Illuminate\Http\Request), Object(Closure))
+#19 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php(48): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#20 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\View\Middleware\ShareErrorsFromSession->handle(Object(Illuminate\Http\Request), Object(Closure))
+#21 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(120): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#22 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(63): Illuminate\Session\Middleware\StartSession->handleStatefulRequest(Object(Illuminate\Http\Request), Object(Illuminate\Session\Store), Object(Closure))
+#23 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Session\Middleware\StartSession->handle(Object(Illuminate\Http\Request), Object(Closure))
+#24 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(36): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#25 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse->handle(Object(Illuminate\Http\Request), Object(Closure))
+#26 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(74): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#27 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Cookie\Middleware\EncryptCookies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#28 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#29 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Router.php(821): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#30 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Router.php(800): Illuminate\Routing\Router->runRouteWithinStack(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request))
+#31 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Router.php(764): Illuminate\Routing\Router->runRoute(Object(Illuminate\Http\Request), Object(Illuminate\Routing\Route))
+#32 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Routing/Router.php(753): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#33 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(200): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#34 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Kernel->{closure:Illuminate\Foundation\Http\Kernel::dispatchToRouter():197}(Object(Illuminate\Http\Request))
+#35 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/inertiajs/inertia-laravel/src/Middleware/EnsureGetOnRedirect.php(19): Illuminate\Pipeline\Pipeline->{closure:Illuminate\Pipeline\Pipeline::prepareDestination():178}(Object(Illuminate\Http\Request))
+#36 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Inertia\Middleware\EnsureGetOnRedirect->handle(Object(Illuminate\Http\Request), Object(Closure))
+#37 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#38 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#39 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle(Object(Illuminate\Http\Request), Object(Closure))
+#40 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#41 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle(Object(Illuminate\Http\Request), Object(Closure))
+#42 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\TrimStrings->handle(Object(Illuminate\Http\Request), Object(Closure))
+#43 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#44 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePostSize->handle(Object(Illuminate\Http\Request), Object(Closure))
+#45 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(109): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#46 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle(Object(Illuminate\Http\Request), Object(Closure))
+#47 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(61): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#48 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\HandleCors->handle(Object(Illuminate\Http\Request), Object(Closure))
+#49 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#50 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\TrustProxies->handle(Object(Illuminate\Http\Request), Object(Closure))
+#51 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#52 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks->handle(Object(Illuminate\Http\Request), Object(Closure))
+#53 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php(28): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#54 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\Http\Middleware\ValidatePathEncoding->handle(Object(Illuminate\Http\Request), Object(Closure))
+#55 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate\Pipeline\Pipeline->{closure:{closure:Illuminate\Pipeline\Pipeline::carry():194}:195}(Object(Illuminate\Http\Request))
+#56 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#57 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#58 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(607): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#59 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(397): Illuminate\Foundation\Testing\TestCase->call('POST', 'http://localhos...', Array, Array, Array, Array)
+#60 /Users/martenackermann/PhpstormProjects/TicketPulse/tests/Feature/BoardTest.php(30): Illuminate\Foundation\Testing\TestCase->post('http://localhos...', Array)
+#61 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(177): P\Tests\Feature\BoardTest->{closure:/Users/martenackermann/PhpstormProjects/TicketPulse/tests/Feature/BoardTest.php:24}()
+#62 [internal function]: P\Tests\Feature\BoardTest->{closure:Pest\Factories\TestCaseMethodFactory::getClosure():167}()
+#63 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/src/Concerns/Testable.php(581): call_user_func_array(Object(Closure), Array)
+#64 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/src/Support/ExceptionTrace.php(26): P\Tests\Feature\BoardTest->{closure:Pest\Concerns\Testable::__callClosure():581}()
+#65 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/src/Concerns/Testable.php(581): Pest\Support\ExceptionTrace::ensure(Object(Closure))
+#66 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/src/Concerns/Testable.php(403): P\Tests\Feature\BoardTest->__callClosure(Object(Closure), Array)
+#67 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(175) : eval()'d code(26): P\Tests\Feature\BoardTest->__runTest(Object(Closure))
+#68 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/Framework/TestCase.php(1318): P\Tests\Feature\BoardTest->__pest_evaluable_user_cannot_create_a_board_in_someone_else_s_workspace()
+#69 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/Framework/TestCase.php(1355): PHPUnit\Framework\TestCase->invokeTestMethod('__pest_evaluabl...', Array)
+#70 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/Framework/TestCase.php(521): PHPUnit\Framework\TestCase->runTest()
+#71 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/Framework/TestRunner/TestRunner.php(99): PHPUnit\Framework\TestCase->runBare()
+#72 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/Framework/TestCase.php(361): PHPUnit\Framework\TestRunner->run(Object(P\Tests\Feature\BoardTest))
+#73 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/Framework/TestSuite.php(374): PHPUnit\Framework\TestCase->run()
+#74 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#75 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/phpunit/phpunit/src/TextUI/Application.php(229): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#76 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/src/Kernel.php(117): PHPUnit\TextUI\Application->run(Array)
+#77 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/bin/pest(207): Pest\Kernel->handle(Array, Array)
+#78 /Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/bin/pest(215): {closure:/Users/martenackermann/PhpstormProjects/TicketPulse/vendor/pestphp/pest/bin/pest:21}()
+#79 {main}
+
+----------------------------------------------------------------------------------
+
+Call to undefined method App\Http\Controllers\BoardController::authorize()[39;22m
+
+  at [32mtests/Feature/BoardTest.php[39m:[32m34[39m
+     30▕         ->post(route('workspaces.boards.store', $workspace->id), [
+     31▕             'name' => 'Evil Board',
+     32▕         ]);
+     33▕
+  ➜  34▕     $response->assertStatus(403);
+     35▕ });
+     36▕
+
+
+  [90mTests:[39m    [31;1m2 failed[39;22m[90m (1 assertions)[39m
+  [90mDuration:[39m [39m0.40s[39m
