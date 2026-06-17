@@ -9,6 +9,9 @@ use App\Models\User;
 
 class CreateCommentAction
 {
+    /**
+     * @param  array{body: string}  $data
+     */
     public function execute(Card $card, User $user, array $data): Comment
     {
         $comment = $card->comments()->create([

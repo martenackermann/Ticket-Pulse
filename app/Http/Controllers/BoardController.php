@@ -7,12 +7,14 @@ use App\Actions\Boards\DeleteBoardAction;
 use App\Actions\Boards\RenameBoardAction;
 use App\Models\Board;
 use App\Models\Workspace;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class BoardController extends Controller
 {
-    public function show(Board $board)
+    public function show(Board $board): Response
     {
         $this->authorize('view', $board);
 
@@ -22,7 +24,7 @@ class BoardController extends Controller
         ]);
     }
 
-    public function store(Request $request, Workspace $workspace, CreateBoardAction $action)
+    public function store(Request $request, Workspace $workspace, CreateBoardAction $action): RedirectResponse
     {
         $this->authorize('update', $workspace);
 
@@ -35,7 +37,7 @@ class BoardController extends Controller
         return redirect()->route('boards.show', $board);
     }
 
-    public function update(Request $request, Board $board, RenameBoardAction $action)
+    public function update(Request $request, Board $board, RenameBoardAction $action): RedirectResponse
     {
         $this->authorize('update', $board);
 
@@ -48,7 +50,7 @@ class BoardController extends Controller
         return back();
     }
 
-    public function destroy(Board $board, DeleteBoardAction $action)
+    public function destroy(Board $board, DeleteBoardAction $action): RedirectResponse
     {
         $this->authorize('delete', $board);
 

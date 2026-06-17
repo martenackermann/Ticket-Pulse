@@ -10,6 +10,9 @@ use App\Models\User;
 
 class CreateCardAction
 {
+    /**
+     * @param  array{title: string, description?: string|null, status?: CardStatus}  $data
+     */
     public function execute(Board $board, User $user, array $data): Card
     {
         $status = $data['status'] ?? CardStatus::Todo;

@@ -6,11 +6,12 @@ use App\Actions\AI\GenerateCardDescriptionAction;
 use App\Actions\AI\GenerateTaskBreakdownAction;
 use App\Actions\AI\SummarizeCommentsAction;
 use App\Models\Card;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AIController extends Controller
 {
-    public function generateDescription(Request $request, GenerateCardDescriptionAction $action)
+    public function generateDescription(Request $request, GenerateCardDescriptionAction $action): JsonResponse
     {
         $request->validate(['title' => 'required|string']);
 
@@ -19,7 +20,7 @@ class AIController extends Controller
         ]);
     }
 
-    public function generateBreakdown(Request $request, GenerateTaskBreakdownAction $action)
+    public function generateBreakdown(Request $request, GenerateTaskBreakdownAction $action): JsonResponse
     {
         $request->validate(['title' => 'required|string']);
 
@@ -28,7 +29,7 @@ class AIController extends Controller
         ]);
     }
 
-    public function summarizeComments(Card $card, SummarizeCommentsAction $action)
+    public function summarizeComments(Card $card, SummarizeCommentsAction $action): JsonResponse
     {
         $this->authorize('view', $card->board);
 
